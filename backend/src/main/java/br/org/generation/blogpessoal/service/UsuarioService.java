@@ -14,13 +14,23 @@ import br.org.generation.blogpessoal.model.Usuario;
 import br.org.generation.blogpessoal.model.UsuarioLogin;
 import br.org.generation.blogpessoal.repository.UsuarioRepository;
 
-@Service // para indicar que é uma classe de servic
-public class UsuarioService { // implenetar regras de negocio
+/**
+ * Classe de serviço para o gerenciamento de usuários.
+ * Esta classe fornece operações relacionadas à criação, atualização e autenticação de usuários.
+ */
+@Service
+public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	// cadastrar usuario
+
+	/**
+	 * Cadastra um novo usuário no sistema.
+	 *
+	 * @param usuario Objeto contendo os dados do usuário a ser cadastrado.
+	 * @return um Optional contendo o usuário cadastrado ou vazio, se o nome de usuário já existir.
+	 */
 	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
 
 		if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent())
@@ -31,7 +41,12 @@ public class UsuarioService { // implenetar regras de negocio
 
 	}
 
-//para implementar em o usuario
+	/**
+	 * Atualiza os dados de um usuário existente.
+	 *
+	 * @param usuario Objeto contendo os dados atualizados do usuário.
+	 * @return um Optional contendo o usuário atualizado ou vazio, se o usuário não for encontrado.
+	 */
 	public Optional<Usuario> atualizarUsuario(Usuario usuario) {
 
 		if (usuarioRepository.findById(usuario.getId()).isPresent()) {
@@ -51,6 +66,12 @@ public class UsuarioService { // implenetar regras de negocio
 
 	}
 
+	/**
+	 * Autentica um usuário com base no nome de usuário e senha.
+	 *
+	 * @param usuarioLogin Objeto contendo o nome de usuário e senha para autenticação.
+	 * @return um Optional contendo os detalhes do usuário logado e o token ou vazio, se a autenticação falhar.
+	 */
 	public Optional<UsuarioLogin> autenticarUsuario(Optional<UsuarioLogin> usuarioLogin) {
 
 		Optional<Usuario> usuario = usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
@@ -74,6 +95,12 @@ public class UsuarioService { // implenetar regras de negocio
 
 	}
 
+	/**
+	 * Criptografa a senha do usuário utilizando o algoritmo BCrypt.
+	 *
+	 * @param senha Senha original a ser criptografada.
+	 * @return Senha criptografada.
+	 */
 	private String criptografarSenha(String senha) {
 
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -82,6 +109,14 @@ public class UsuarioService { // implenetar regras de negocio
 
 	}
 
+	/**
+	 * Compara uma senha fornecida (geralmente digitada pelo usuário) com uma senha criptografada
+	 * armazenada no banco de dados.
+	 *
+	 * @param senhaDigitada Senha fornecida pelo usuário.
+	 * @param senhaBanco Senha criptografada armazenada no banco de dados.
+	 * @return Verdadeiro se as senhas corresponderem, falso caso contrário.
+	 */
 	private boolean compararSenhas(String senhaDigitada, String senhaBanco) {
 
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -90,6 +125,14 @@ public class UsuarioService { // implenetar regras de negocio
 
 	}
 
+	/**
+	 * Gera um token Basic Auth baseado em um nome de usuário e senha.
+	 * O token é uma codificação base64 da combinação do nome de usuário e senha.
+	 *
+	 * @param usuario Nome de usuário.
+	 * @param senha Senha do usuário.
+	 * @return Token Basic Auth.
+	 */
 	private String gerarBasicToken(String usuario, String senha) {
 
 		String token = usuario + ":" + senha;
