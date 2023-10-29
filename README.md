@@ -22,7 +22,7 @@ Esse projeto é uma plataforma de blog pessoal onde os usuários podem criar, at
 
 1. **Clone este repositório**
     ```bash
-    git clone https://github.com/AmandaMFurtado/blogpessoal.git
+    git clone https://github.com/AmandaMFurtado/Blog-Pessoal-Backend.git
     ```
 
 2. **Navegue até o diretório e execute o projeto usando o Maven**
