@@ -8,7 +8,6 @@ Esse projeto é uma plataforma de blog pessoal onde os usuários podem criar, at
 - [Instalação e Uso](#instalação-e-uso)
 - [Endpoints](#endpoints)
 - [Contribuição](#contribuição)
-- [Licença](#licença)
 
 ## Tecnologias
 
